@@ -40,7 +40,7 @@ export class CompaniesService {
 			request.Phone,
 			request.Email,
 		);
-		updatedCompany.Id = updatedCompany.Id;
+		updatedCompany.Id = request.Id;
 		this.repository.Update(updatedCompany);
 	}
 
