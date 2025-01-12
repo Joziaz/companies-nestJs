@@ -1,10 +1,11 @@
+import { ObjectId } from "mongoose";
 import { BaseEntity } from "../domain/entities/baseEntity";
 import { Repository } from "../domain/repository";
 
 export class MemoryRepository<T extends BaseEntity> implements Repository<T> {
-	private readonly dict: Map<string, T>;
+	private readonly dict: Map<ObjectId | string, T>;
 	constructor() {
-		this.dict = new Map<string, T>();
+		this.dict = new Map<ObjectId | string, T>();
 	}
 	GetAll(): Promise<T[]> {
 		const entities = new Array<T>(this.dict.size);
@@ -28,22 +29,23 @@ export class MemoryRepository<T extends BaseEntity> implements Repository<T> {
 	}
 
 	Save(entity: T): Promise<T> {
-		if (this.dict.has(entity.Id)) {
-			throw Error(`entity with id: ${entity.Id} alredy exist`);
+		if (!entity._id) {
+			throw Error("the id can't be empty");
 		}
-
-		entity.Id = crypto.randomUUID().toString();
+		if (this.dict.has(entity._id)) {
+			throw Error(`entity with id: ${entity._id} alredy exist`);
+		}
 		entity.CreatedAt = new Date();
-		this.dict.set(entity.Id, entity);
+		this.dict.set(entity._id, entity);
 		return Promise.resolve(entity);
 	}
 
 	Update(entity: T): Promise<void> {
-		if (!this.dict.has(entity.Id)) {
-			throw Error(`entity with id: ${entity.Id} not exist`);
+		if (!this.dict.has(entity._id)) {
+			throw Error(`entity with id: ${entity._id} not exist`);
 		}
 
-		this.dict.set(entity.Id, entity);
+		this.dict.set(entity._id, entity);
 		return Promise.resolve();
 	}
 

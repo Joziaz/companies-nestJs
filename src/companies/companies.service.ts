@@ -40,7 +40,7 @@ export class CompaniesService {
 			request.Phone,
 			request.Email,
 		);
-		updatedCompany.Id = request.Id;
+		updatedCompany._id = request.Id;
 		await this.repository.Update(updatedCompany);
 		return Promise.resolve(updatedCompany);
 	}

@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type Department {
-  Id: String!
+  _id: String!
   CreatedAt: DateTime!
   Name: String!
   Description: String!
@@ -17,7 +17,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Project {
-  Id: String!
+  _id: String!
   CreatedAt: DateTime!
   Name: String!
   Description: String!
@@ -28,7 +28,7 @@ type Project {
 }
 
 type Employee {
-  Id: String!
+  _id: String!
   CreatedAt: DateTime!
   FirstName: String!
   LastName: String!
@@ -39,7 +39,7 @@ type Employee {
 }
 
 type Client {
-  Id: String!
+  _id: String!
   CreatedAt: DateTime!
   Name: String!
   ContactPerson: String!
@@ -50,7 +50,7 @@ type Client {
 }
 
 type Company {
-  Id: String!
+  _id: String!
   CreatedAt: DateTime!
   Name: String!
   Address: String!
@@ -63,7 +63,7 @@ type Company {
 
 type Query {
   Companies: [Company!]!
-  Company(id: String!): Company!
+  Company(id: String!): Company
 }
 
 type Mutation {

@@ -12,7 +12,7 @@ export class CompaniesResolver {
 		return this.companiesService.GetAll();
 	}
 
-	@Query(() => Company)
+	@Query(() => Company, { nullable: true })
 	Company(@Args("id") id: string): Promise<Company> {
 		return this.companiesService.GetById(id);
 	}

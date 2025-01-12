@@ -1,12 +1,11 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { Prop } from "@nestjs/mongoose";
-import { SchemaTypes } from "mongoose";
+import { ObjectId, SchemaTypes } from "mongoose";
 
 @ObjectType()
 export class BaseEntity {
-	@Prop({ type: SchemaTypes.ObjectId })
-	@Field()
-	Id: string;
+	@Field(() => String)
+	_id: ObjectId | string;
 	@Prop({ type: SchemaTypes.Date, default: Date.now })
 	@Field()
 	CreatedAt: Date;
