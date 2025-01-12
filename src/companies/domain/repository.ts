@@ -1,10 +1,10 @@
 import { BaseEntity } from "./entities/baseEntity";
 
 export interface Repository<T extends BaseEntity> {
-	GetAll(): T[];
-	GetById(int: number): T;
-	Exist(int: number): boolean;
-	Save(entity: T): T;
-	Update(entity: T): void;
-	Delete(id: number): boolean;
+	GetAll(): Promise<T[]>;
+	GetById(id: string): Promise<T>;
+	Exist(id: string): Promise<boolean>;
+	Save(entity: T): Promise<T>;
+	Update(entity: T): Promise<void>;
+	Delete(id: string): Promise<boolean>;
 }

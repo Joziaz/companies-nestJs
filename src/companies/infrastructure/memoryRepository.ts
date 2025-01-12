@@ -2,53 +2,56 @@ import { BaseEntity } from "../domain/entities/baseEntity";
 import { Repository } from "../domain/repository";
 
 export class MemoryRepository<T extends BaseEntity> implements Repository<T> {
-	private readonly dict: Map<number, T>;
+	private readonly dict: Map<string, T>;
 	constructor() {
-		this.dict = new Map<number, T>();
+		this.dict = new Map<string, T>();
 	}
-	GetAll(): T[] {
+	GetAll(): Promise<T[]> {
 		const entities = new Array<T>(this.dict.size);
 		let index = 0;
 		for (const [, value] of this.dict) {
 			entities[index++] = value;
 		}
-		return entities;
+		return Promise.resolve(entities);
 	}
-	GetById(id: number): T {
+	GetById(id: string): Promise<T> {
 		if (!this.dict.has(id)) {
 			return null;
 		}
-		return this.dict.get(id);
+		const entity = this.dict.get(id);
+		return Promise.resolve(entity);
 	}
 
-	Exist(int: number): boolean {
-		return this.dict.has(int);
+	Exist(int: string): Promise<boolean> {
+		const exist = this.dict.has(int);
+		return Promise.resolve(exist);
 	}
 
-	Save(entity: T): T {
+	Save(entity: T): Promise<T> {
 		if (this.dict.has(entity.Id)) {
 			throw Error(`entity with id: ${entity.Id} alredy exist`);
 		}
 
-		entity.Id = Math.floor(Math.random() * 100 + 1);
+		entity.Id = crypto.randomUUID().toString();
 		entity.CreatedAt = new Date();
 		this.dict.set(entity.Id, entity);
-		return entity;
+		return Promise.resolve(entity);
 	}
 
-	Update(entity: T): void {
+	Update(entity: T): Promise<void> {
 		if (!this.dict.has(entity.Id)) {
 			throw Error(`entity with id: ${entity.Id} not exist`);
 		}
 
 		this.dict.set(entity.Id, entity);
+		return Promise.resolve();
 	}
 
-	Delete(id: number): boolean {
+	Delete(id: string): Promise<boolean> {
 		if (!this.dict.has(id)) {
 			throw Error(`entity with id: ${id} not exist`);
 		}
 		this.dict.delete(id);
-		return true;
+		return Promise.resolve(true);
 	}
 }

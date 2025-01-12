@@ -8,30 +8,30 @@ import { UpdateCompanyInput } from "./domain/dtos/updateCompany.input";
 export class CompaniesResolver {
 	constructor(private readonly companiesService: CompaniesService) {}
 	@Query(() => [Company])
-	Companies(): Company[] {
+	Companies(): Promise<Company[]> {
 		return this.companiesService.GetAll();
 	}
 
 	@Query(() => Company)
-	Company(@Args("id") id: number): Company {
+	Company(@Args("id") id: string): Promise<Company> {
 		return this.companiesService.GetById(id);
 	}
 	@Mutation(() => Company)
 	CreateCompany(
 		@Args("createCompanyInput") input: CreateCompanyInput,
-	): Company {
+	): Promise<Company> {
 		return this.companiesService.Create(input);
 	}
 
 	@Mutation(() => Company)
 	UpdateCompany(
 		@Args("updateCompanyInput") input: UpdateCompanyInput,
-	): Company {
+	): Promise<Company> {
 		return this.companiesService.UpdateCompany(input);
 	}
 
-	@Mutation(() => Company)
-	DeleteCompany(@Args("id") id: number): boolean {
+	@Mutation(() => Boolean)
+	DeleteCompany(@Args("id") id: string): Promise<boolean> {
 		return this.companiesService.Delete(id);
 	}
 }

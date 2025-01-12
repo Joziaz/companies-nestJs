@@ -15,15 +15,15 @@ export class CompaniesService {
 		this.repository = companyRepository;
 	}
 
-	GetAll(): Company[] {
+	GetAll(): Promise<Company[]> {
 		return this.repository.GetAll();
 	}
 
-	GetById(id: number): Company {
+	GetById(id: string): Promise<Company> {
 		return this.repository.GetById(id);
 	}
 
-	Create(request: CreateCompanyInput) {
+	Create(request: CreateCompanyInput): Promise<Company> {
 		const newCompany = new Company(
 			request.Name,
 			request.Address,
@@ -33,7 +33,7 @@ export class CompaniesService {
 		return this.repository.Save(newCompany);
 	}
 
-	UpdateCompany(request: UpdateCompanyInput) {
+	async UpdateCompany(request: UpdateCompanyInput): Promise<Company> {
 		const updatedCompany = new Company(
 			request.Name,
 			request.Address,
@@ -41,11 +41,11 @@ export class CompaniesService {
 			request.Email,
 		);
 		updatedCompany.Id = request.Id;
-		this.repository.Update(updatedCompany);
-		return updatedCompany;
+		await this.repository.Update(updatedCompany);
+		return Promise.resolve(updatedCompany);
 	}
 
-	Delete(id: number): boolean {
+	Delete(id: string): Promise<boolean> {
 		return this.repository.Delete(id);
 	}
 }
