@@ -5,14 +5,21 @@ import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo";
 import { join } from "path";
 import { GraphQLFormattedError } from "graphql/error";
 import { MongooseModule } from "@nestjs/mongoose";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			envFilePath: [".env", ".development.env"],
+			isGlobal: true,
 		}),
-		MongooseModule.forRoot(process.env.MONGO_CONNECTION_STRING),
+		MongooseModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: async (config: ConfigService) => ({
+				uri: config.get<string>("MONGO_CONNECTION_STRING"),
+			}),
+		}),
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			driver: ApolloDriver,
 			autoSchemaFile: join(process.cwd(), "src/shema.gpl"),

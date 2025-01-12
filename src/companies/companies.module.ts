@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 import { CompaniesService } from "./companies.service";
 import { CompaniesResolver } from "./companies.resolver";
-import { MemoryRepository } from "./infrastructure/memoryRepository";
 import { Company, CompanySchema } from "./domain/entities/company.entity";
 import { MongooseModule } from "@nestjs/mongoose";
+import { MongoDbRepository } from "./infrastructure/mongoDbRepostiory";
 
 @Module({
 	imports: [
@@ -19,7 +19,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 		CompaniesResolver,
 		{
 			provide: "Repository<Company>",
-			useValue: new MemoryRepository<Company>(),
+			useClass: MongoDbRepository<Company>,
 		},
 	],
 })
