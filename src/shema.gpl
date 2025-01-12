@@ -1,0 +1,88 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Department {
+  Id: Int!
+  CreatedAt: DateTime!
+  Name: String!
+  Description: String!
+  ManagerId: Float!
+  CompanyId: Company!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Project {
+  Id: Int!
+  CreatedAt: DateTime!
+  Name: String!
+  Description: String!
+  StartDate: DateTime!
+  EndDate: DateTime
+  Employees: [Employee!]!
+  CompanyId: Company!
+}
+
+type Employee {
+  Id: Int!
+  CreatedAt: DateTime!
+  FirstName: String!
+  LastName: String!
+  Position: String!
+  DepartmentId: Float!
+  Projects: [Project!]
+  CompanyId: Company!
+}
+
+type Client {
+  Id: Int!
+  CreatedAt: DateTime!
+  Name: String!
+  ContactPerson: String!
+  Phone: String!
+  Email: String!
+  ContractedProjects: [Project!]!
+  CompanyId: Company!
+}
+
+type Company {
+  Id: Int!
+  CreatedAt: DateTime!
+  Name: String!
+  Address: String!
+  Phone: String!
+  Email: String!
+  Employees: [Employee!]
+  Departments: [Department!]
+  Clients: [Client!]
+}
+
+type Query {
+  Companies: [Company!]!
+  Company(id: Float!): Company!
+}
+
+type Mutation {
+  CreateCompany(createCompanyInput: CreateCompanyInput!): Company!
+  UpdateCompany(updateCompanyInput: UpdateCompanyInput!): Company!
+  DeleteCompany(id: Float!): Company!
+}
+
+input CreateCompanyInput {
+  Name: String!
+  Address: String!
+  Phone: String!
+  Email: String!
+}
+
+input UpdateCompanyInput {
+  Name: String
+  Address: String
+  Phone: String
+  Email: String
+  Id: Int!
+}
