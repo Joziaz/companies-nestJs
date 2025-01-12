@@ -6,5 +6,5 @@ export interface Repository<T extends BaseEntity> {
 	Exist(int: number): boolean;
 	Save(entity: T): T;
 	Update(entity: T): void;
-	Delete(id: number): void;
+	Delete(id: number): boolean;
 }

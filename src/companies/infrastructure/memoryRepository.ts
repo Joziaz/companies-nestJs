@@ -44,10 +44,11 @@ export class MemoryRepository<T extends BaseEntity> implements Repository<T> {
 		this.dict.set(entity.Id, entity);
 	}
 
-	Delete(id: number): void {
+	Delete(id: number): boolean {
 		if (!this.dict.has(id)) {
 			throw Error(`entity with id: ${id} not exist`);
 		}
 		this.dict.delete(id);
+		return true;
 	}
 }

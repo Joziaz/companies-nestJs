@@ -6,7 +6,7 @@ import { UpdateCompanyInput } from "./domain/dtos/updateCompany.input";
 
 @Resolver()
 export class CompaniesResolver {
-	constructor(private readonly companiesService: CompaniesService) { }
+	constructor(private readonly companiesService: CompaniesService) {}
 	@Query(() => [Company])
 	Companies(): Company[] {
 		return this.companiesService.GetAll();
@@ -23,13 +23,15 @@ export class CompaniesResolver {
 		return this.companiesService.Create(input);
 	}
 
-	@Mutation(() => Company, { nullable: true })
-	UpdateCompany(@Args("updateCompanyInput") input: UpdateCompanyInput): void {
-		this.companiesService.UpdateCompany(input);
+	@Mutation(() => Company)
+	UpdateCompany(
+		@Args("updateCompanyInput") input: UpdateCompanyInput,
+	): Company {
+		return this.companiesService.UpdateCompany(input);
 	}
 
-	@Mutation(() => Company, { nullable: true })
-	DeleteCompany(@Args("id") id: number): void {
-		this.companiesService.Delete(id);
+	@Mutation(() => Company)
+	DeleteCompany(@Args("id") id: number): boolean {
+		return this.companiesService.Delete(id);
 	}
 }

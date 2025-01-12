@@ -42,9 +42,10 @@ export class CompaniesService {
 		);
 		updatedCompany.Id = request.Id;
 		this.repository.Update(updatedCompany);
+		return updatedCompany;
 	}
 
-	Delete(id: number): void {
-		this.repository.Delete(id);
+	Delete(id: number): boolean {
+		return this.repository.Delete(id);
 	}
 }
