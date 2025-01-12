@@ -27,8 +27,8 @@ export class MongoDbRepository<T extends BaseEntity> implements Repository<T> {
 		await createdEntity.updateOne();
 		return Promise.resolve();
 	}
-	async Delete(id: string): Promise<boolean> {
-		this.model.deleteOne({ id });
+	Delete(id: string): Promise<boolean> {
+		this.model.deleteOne({ _id: id });
 		return Promise.resolve(true);
 	}
 }
