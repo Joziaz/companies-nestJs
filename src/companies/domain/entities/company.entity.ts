@@ -1,10 +1,9 @@
 import { Field, ObjectType } from "@nestjs/graphql";
 import { BaseEntity } from "./baseEntity";
-import { Department } from "./department.entity";
 import { Employee } from "./employee.entity";
 import { Client } from "./client.entity";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument } from "mongoose";
+import { HydratedDocument, Types } from "mongoose";
 
 export type CompanyDocument = HydratedDocument<Company>;
 @Schema()
@@ -17,26 +16,23 @@ export class Company extends BaseEntity {
 		this.Phone = phone;
 		this.Email = email;
 	}
-	@Prop({ required: true })
+	@Prop()
 	@Field()
 	Name: string;
-	@Prop({ required: true })
+	@Prop()
 	@Field()
 	Address: string;
-	@Prop({ required: true })
+	@Prop()
 	@Field()
 	Phone: string;
-	@Prop({ required: true })
+	@Prop()
 	@Field()
 	Email: string;
-
+	@Prop({ type: [{ type: Types.ObjectId, ref: "Employee" }] })
 	@Field(() => [Employee], { nullable: true })
 	Employees?: Employee[];
-
-	@Field(() => [Department], { nullable: true })
-	Departments?: Department[];
-
-	@Field(() => [Client], { nullable: true })
+	@Prop({ type: [{ type: Types.ObjectId, ref: "Client" }] })
+	@Field(() => [Client], { name: "Clients", nullable: true })
 	Clients?: Client[];
 }
 

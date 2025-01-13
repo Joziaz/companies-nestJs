@@ -2,13 +2,40 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Department {
-  _id: String!
+type Client {
+  Company: Company!
+  ContactPerson: String!
   CreatedAt: DateTime!
+  Email: String!
   Name: String!
-  Description: String!
-  ManagerId: Float!
-  CompanyId: Company!
+  Phone: String!
+  _id: String!
+}
+
+type Company {
+  Address: String!
+  Clients: [Client!]
+  CreatedAt: DateTime!
+  Email: String!
+  Employees: [Employee!]
+  Name: String!
+  Phone: String!
+  _id: String!
+}
+
+input CreateClientInput {
+  CompanyId: String!
+  ContactPerson: String!
+  Email: String!
+  Name: String!
+  Phone: String!
+}
+
+input CreateCompanyInput {
+  Address: String!
+  Email: String!
+  Name: String!
+  Phone: String!
 }
 
 """
@@ -16,73 +43,58 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Project {
-  _id: String!
-  CreatedAt: DateTime!
-  Name: String!
-  Description: String!
-  StartDate: DateTime!
-  EndDate: DateTime
-  Employees: [Employee!]!
-  CompanyId: Company!
-}
-
 type Employee {
-  _id: String!
+  AssignedTask: [Task!]
+  Company: Company!
   CreatedAt: DateTime!
+  DepartmentId: Float!
   FirstName: String!
   LastName: String!
   Position: String!
-  DepartmentId: Float!
-  Projects: [Project!]
-  CompanyId: Company!
-}
-
-type Client {
   _id: String!
-  CreatedAt: DateTime!
-  Name: String!
-  ContactPerson: String!
-  Phone: String!
-  Email: String!
-  ContractedProjects: [Project!]!
-  CompanyId: Company!
-}
-
-type Company {
-  _id: String!
-  CreatedAt: DateTime!
-  Name: String!
-  Address: String!
-  Phone: String!
-  Email: String!
-  Employees: [Employee!]
-  Departments: [Department!]
-  Clients: [Client!]
-}
-
-type Query {
-  Companies: [Company!]!
-  Company(id: String!): Company
 }
 
 type Mutation {
+  CreateClient(createClientInput: CreateClientInput!): Client!
   CreateCompany(createCompanyInput: CreateCompanyInput!): Company!
-  UpdateCompany(updateCompanyInput: UpdateCompanyInput!): Company!
+  DeleteClient(id: String!): Boolean!
   DeleteCompany(id: String!): Boolean!
+  UpdateClient(updateClientInput: UpdateClientInput!): Client!
+  UpdateCompany(updateCompanyInput: UpdateCompanyInput!): Company!
 }
 
-input CreateCompanyInput {
-  Name: String!
-  Address: String!
-  Phone: String!
-  Email: String!
+type Query {
+  ClientById(id: String!): Client
+  Clients: [Client!]!
+  ClientsByCompany(companyId: String!): [Client!]!
+  Companies: [Company!]!
+  CompanyById(id: String!): Company
+}
+
+type Task {
+  AssignedEmployees: [Employee!]
+  Client: Client!
+  Completed: Boolean!
+  CreatedAt: DateTime!
+  Description: String!
+  DueDate: DateTime
+  Title: String!
+  UpdatedAt: DateTime!
+  _id: String!
+}
+
+input UpdateClientInput {
+  ContactPerson: String
+  Email: String
+  Id: String!
+  Name: String
+  Phone: String
 }
 
 input UpdateCompanyInput {
-  Name: String
   Address: String
-  Phone: String
   Email: String
   Id: String!
+  Name: String
+  Phone: String
 }

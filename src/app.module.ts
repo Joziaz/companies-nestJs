@@ -23,6 +23,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			driver: ApolloDriver,
 			autoSchemaFile: join(process.cwd(), "src/shema.gpl"),
+			sortSchema: true,
 			formatError: (error) => {
 				const originalError = error.extensions
 					.originalError as GraphQLFormattedError;

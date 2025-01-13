@@ -1,8 +1,10 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { CompaniesService } from "./companies.service";
+import { CompaniesService } from "./application/companies.service";
 import { CreateCompanyInput } from "./domain/dtos/createCompany.input";
 import { Company } from "./domain/entities/company.entity";
 import { UpdateCompanyInput } from "./domain/dtos/updateCompany.input";
+import { ObjectId } from "mongoose";
+import { ParseObjectIdPipe } from "src/shared/ObjectIdParse.pipe";
 
 @Resolver()
 export class CompaniesResolver {
@@ -13,7 +15,10 @@ export class CompaniesResolver {
 	}
 
 	@Query(() => Company, { nullable: true })
-	Company(@Args("id") id: string): Promise<Company> {
+	CompanyById(
+		@Args("id", { type: () => String }, ParseObjectIdPipe)
+		id: ObjectId,
+	): Promise<Company> {
 		return this.companiesService.GetById(id);
 	}
 	@Mutation(() => Company)
@@ -31,7 +36,9 @@ export class CompaniesResolver {
 	}
 
 	@Mutation(() => Boolean)
-	DeleteCompany(@Args("id") id: string): Promise<boolean> {
+	DeleteCompany(
+		@Args("id", { type: () => String }, ParseObjectIdPipe) id: ObjectId,
+	): Promise<boolean> {
 		return this.companiesService.Delete(id);
 	}
 }
