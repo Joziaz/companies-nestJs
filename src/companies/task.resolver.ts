@@ -2,7 +2,7 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CreateTaskInput } from "./domain/dtos/createTask.input";
 import { Task } from "./domain/entities/task.entity";
 import { UpdateTaskInput } from "./domain/dtos/updateTask.input";
-import { TaskService } from "./application/task.service";
+import { TaskService } from "./services/task.service";
 import { AssignTaskInput } from "./domain/dtos/assignTask.input";
 import { ObjectId } from "mongodb";
 

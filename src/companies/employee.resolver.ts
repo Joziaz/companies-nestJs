@@ -2,7 +2,7 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CreateEmployeeInput } from "./domain/dtos/createEmployee.input";
 import { Employee } from "./domain/entities/employee.entity";
 import { UpdateEmployeeInput } from "./domain/dtos/updateEmployee.input";
-import { EmployeeService } from "./application/employee.service";
+import { EmployeeService } from "./services/employee.service";
 import { ObjectId } from "mongodb";
 
 @Resolver()
