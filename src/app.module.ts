@@ -12,7 +12,7 @@ import { ObjectId } from "mongodb";
 @Module({
 	imports: [
 		ConfigModule.forRoot({
-			envFilePath: [".env", ".development.env"],
+			envFilePath: [".env", ".development.env", ".local.env"],
 			isGlobal: true,
 		}),
 		MongooseModule.forRootAsync({
