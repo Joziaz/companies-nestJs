@@ -1,9 +1,9 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { CompaniesService } from "./services/companies.service";
-import { CreateCompanyInput } from "./domain/dtos/createCompany.input";
-import { Company } from "./domain/entities/company.entity";
-import { UpdateCompanyInput } from "./domain/dtos/updateCompany.input";
+import { CompaniesService } from "../services/companies.service";
 import { ObjectId } from "mongoose";
+import { CreateCompanyInput } from "../domain/dtos/createCompany.input";
+import { UpdateCompanyInput } from "../domain/dtos/updateCompany.input";
+import { Company } from "../domain/entities/company.entity";
 
 @Resolver()
 export class CompaniesResolver {

@@ -1,9 +1,9 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { CreateClientInput } from "./domain/dtos/createClient.input";
-import { Client } from "./domain/entities/client.entity";
-import { ClientService } from "./services/clients.service";
-import { UpdateClientInput } from "./domain/dtos/updateClientInput";
 import { ObjectId } from "mongodb";
+import { CreateClientInput } from "../domain/dtos/createClient.input";
+import { UpdateClientInput } from "../domain/dtos/updateClientInput";
+import { Client } from "../domain/entities/client.entity";
+import { ClientService } from "../services/clients.service";
 
 @Resolver()
 export class ClientResolver {

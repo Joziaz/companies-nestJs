@@ -1,10 +1,10 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { CreateTaskInput } from "./domain/dtos/createTask.input";
-import { Task } from "./domain/entities/task.entity";
-import { UpdateTaskInput } from "./domain/dtos/updateTask.input";
-import { TaskService } from "./services/task.service";
-import { AssignTaskInput } from "./domain/dtos/assignTask.input";
 import { ObjectId } from "mongodb";
+import { AssignTaskInput } from "../domain/dtos/assignTask.input";
+import { CreateTaskInput } from "../domain/dtos/createTask.input";
+import { UpdateTaskInput } from "../domain/dtos/updateTask.input";
+import { Task } from "../domain/entities/task.entity";
+import { TaskService } from "../services/task.service";
 
 @Resolver()
 export class TaskResolver {
