@@ -8,10 +8,10 @@ import { Task, TaskSchema } from "./domain/entities/task.entity";
 import { MongooseModule } from "@nestjs/mongoose";
 import { TaskService } from "./services/task.service";
 import { EmployeeService } from "./services/employee.service";
-import { CompaniesResolver } from "./services/companies.resolver";
-import { ClientResolver } from "./services/clients.resolver";
-import { TaskResolver } from "./services/task.resolver";
-import { EmployeeResolver } from "./services/employee.resolver";
+import { CompaniesResolver } from "./resolvers/companies.resolver";
+import { ClientResolver } from "./resolvers/clients.resolver";
+import { TaskResolver } from "./resolvers/task.resolver";
+import { EmployeeResolver } from "./resolvers/employee.resolver";
 
 @Module({
 	imports: [
