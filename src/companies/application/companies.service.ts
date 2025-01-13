@@ -35,14 +35,16 @@ export class CompaniesService {
 	}
 
 	async UpdateCompany(request: UpdateCompanyInput): Promise<Company> {
-		const updatedCompany = new this.companyModel({
-			_id: request.Id,
-			Name: request.Name,
-			Address: request.Address,
-			Phone: request.Phone,
-			Email: request.Email,
-		});
-		await updatedCompany.updateOne();
+		const updatedCompany = this.companyModel.findByIdAndUpdate(
+			request.Id,
+			{
+				Name: request.Name,
+				Address: request.Address,
+				Phone: request.Phone,
+				Email: request.Email,
+			},
+			{ new: true },
+		);
 		return Promise.resolve(updatedCompany);
 	}
 

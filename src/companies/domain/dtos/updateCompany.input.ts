@@ -1,27 +1,25 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { ObjectId } from "mongoose";
-import { IsObjectId } from "../../../shared/isObjectId.decorator";
-import { IsEmail, IsNotEmpty, MaxLength } from "class-validator";
+import { IsEmail, IsOptional, MaxLength } from "class-validator";
+import { ObjectId } from "mongodb";
 
 @InputType()
 export class UpdateCompanyInput {
-	@IsObjectId()
-	@Field(() => String)
+	@Field(() => ObjectId)
 	Id: ObjectId;
 	@MaxLength(25)
-	@IsNotEmpty()
+	@IsOptional()
 	@Field({ nullable: true, defaultValue: undefined })
 	Name?: string;
 	@MaxLength(200)
-	@IsNotEmpty()
+	@IsOptional()
 	@Field({ nullable: true, defaultValue: undefined })
 	Address?: string;
 	@MaxLength(15)
-	@IsNotEmpty()
+	@IsOptional()
 	@Field({ nullable: true, defaultValue: undefined })
 	Phone?: string;
 	@IsEmail({}, { message: "invalid email" })
-	@IsNotEmpty()
+	@IsOptional()
 	@Field({ nullable: true, defaultValue: undefined })
 	Email?: string;
 }

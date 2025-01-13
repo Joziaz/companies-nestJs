@@ -4,7 +4,8 @@ import { Client } from "../domain/entities/client.entity";
 import { CreateClientInput } from "../domain/dtos/createClient.input";
 import { UpdateClientInput } from "../domain/dtos/updateClientInput";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model, ObjectId } from "mongoose";
+import { Model } from "mongoose";
+import { ObjectId } from "mongodb";
 
 @Injectable()
 export class ClientService {
@@ -13,12 +14,12 @@ export class ClientService {
 
 	constructor(
 		@InjectModel(Client.name)
-		ClientRepository: Model<Client>,
+		clientModel: Model<Client>,
 		@InjectModel(Company.name)
-		companyRepository: Model<Company>,
+		companyModel: Model<Company>,
 	) {
-		this.clientModel = ClientRepository;
-		this.companyModel = companyRepository;
+		this.clientModel = clientModel;
+		this.companyModel = companyModel;
 	}
 
 	GetByCompanyId(id: ObjectId): Promise<Client[]> {
@@ -53,14 +54,16 @@ export class ClientService {
 	}
 
 	async UpdateClient(request: UpdateClientInput): Promise<Client> {
-		const updatedClient = new this.clientModel({
-			_id: request.Id,
-			Name: request.Name,
-			ContactPerson: request.ContactPerson,
-			Phone: request.Phone,
-			Email: request.Email,
-		});
-		await updatedClient.updateOne();
+		const updatedClient = await this.clientModel.findByIdAndUpdate(
+			request.Id,
+			{
+				Name: request.Name,
+				ContactPerson: request.ContactPerson,
+				Phone: request.Phone,
+				Email: request.Email,
+			},
+			{ new: true },
+		);
 		return Promise.resolve(updatedClient);
 	}
 

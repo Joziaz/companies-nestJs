@@ -8,6 +8,10 @@ import { Client, ClientSchema } from "./domain/entities/client.entity";
 import { Employee, EmployeeSchema } from "./domain/entities/employee.entity";
 import { Task, TaskSchema } from "./domain/entities/task.entity";
 import { MongooseModule } from "@nestjs/mongoose";
+import { TaskService } from "./application/task.service";
+import { TaskResolver } from "./task.resolver";
+import { EmployeeService } from "./application/employee.service";
+import { EmployeeResolver } from "./employee.resolver";
 
 @Module({
 	imports: [
@@ -35,6 +39,10 @@ import { MongooseModule } from "@nestjs/mongoose";
 		CompaniesResolver,
 		ClientService,
 		ClientResolver,
+		TaskService,
+		TaskResolver,
+		EmployeeService,
+		EmployeeResolver,
 	],
 })
 export class CompaniesModule {}

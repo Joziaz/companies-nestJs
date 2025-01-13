@@ -1,24 +1,25 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsEmail, IsOptional, MaxLength } from "class-validator";
+import { IsNumber, IsOptional, MaxLength } from "class-validator";
+import { ObjectId } from "mongodb";
 
 @InputType()
-export class UpdateClientInput {
-	@Field()
-	Id: string;
+export class UpdateEmployeeInput {
+	@Field(() => ObjectId)
+	Id: ObjectId;
 	@MaxLength(25)
 	@IsOptional()
 	@Field({ nullable: true, defaultValue: undefined })
-	Name?: string;
-	@MaxLength(200)
+	FirstName?: string;
+	@MaxLength(25)
 	@IsOptional()
 	@Field({ nullable: true, defaultValue: undefined })
-	ContactPerson?: string;
-	@MaxLength(15)
+	LastName?: string;
+	@MaxLength(20)
 	@IsOptional()
 	@Field({ nullable: true, defaultValue: undefined })
-	Phone?: string;
-	@IsEmail({}, { message: "invalid email" })
+	Position?: string;
+	@IsNumber()
 	@IsOptional()
 	@Field({ nullable: true, defaultValue: undefined })
-	Email?: string;
+	Salary?: number;
 }

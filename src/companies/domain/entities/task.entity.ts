@@ -1,9 +1,9 @@
 import { Field, ObjectType } from "@nestjs/graphql";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { BaseEntity } from "./baseEntity";
+import { HydratedDocument, Types } from "mongoose";
 import { Employee } from "./employee.entity";
 import { Client } from "./client.entity";
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { HydratedDocument, Types } from "mongoose";
 
 export type TaskDocument = HydratedDocument<Task>;
 
@@ -17,12 +17,6 @@ export class Task extends BaseEntity {
 	@Field()
 	Description: string;
 	@Prop()
-	@Field()
-	Completed: boolean;
-	@Prop()
-	@Field()
-	UpdatedAt: Date;
-	@Prop()
 	@Field({ nullable: true })
 	DueDate?: Date;
 	@Prop({ type: [{ type: Types.ObjectId, ref: "Employee" }] })
@@ -30,12 +24,7 @@ export class Task extends BaseEntity {
 	AssignedEmployees?: Employee[];
 	@Prop({ type: Types.ObjectId, ref: "Client" })
 	@Field(() => Client)
-	Client: Client;
-
-	MarkAsCompleted(): void {
-		this.Completed = true;
-		this.UpdatedAt = new Date();
-	}
+	TaskRequestor: Client;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);

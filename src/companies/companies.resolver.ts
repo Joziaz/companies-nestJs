@@ -4,7 +4,6 @@ import { CreateCompanyInput } from "./domain/dtos/createCompany.input";
 import { Company } from "./domain/entities/company.entity";
 import { UpdateCompanyInput } from "./domain/dtos/updateCompany.input";
 import { ObjectId } from "mongoose";
-import { ParseObjectIdPipe } from "src/shared/ObjectIdParse.pipe";
 
 @Resolver()
 export class CompaniesResolver {
@@ -16,7 +15,7 @@ export class CompaniesResolver {
 
 	@Query(() => Company, { nullable: true })
 	CompanyById(
-		@Args("id", { type: () => String }, ParseObjectIdPipe)
+		@Args("id", { type: () => String })
 		id: ObjectId,
 	): Promise<Company> {
 		return this.companiesService.GetById(id);
@@ -37,7 +36,7 @@ export class CompaniesResolver {
 
 	@Mutation(() => Boolean)
 	DeleteCompany(
-		@Args("id", { type: () => String }, ParseObjectIdPipe) id: ObjectId,
+		@Args("id", { type: () => String }) id: ObjectId,
 	): Promise<boolean> {
 		return this.companiesService.Delete(id);
 	}

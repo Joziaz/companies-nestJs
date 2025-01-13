@@ -3,8 +3,7 @@ import { CreateClientInput } from "./domain/dtos/createClient.input";
 import { Client } from "./domain/entities/client.entity";
 import { ClientService } from "./application/clients.service";
 import { UpdateClientInput } from "./domain/dtos/updateClientInput";
-import { ParseObjectIdPipe } from "src/shared/ObjectIdParse.pipe";
-import { ObjectId } from "mongoose";
+import { ObjectId } from "mongodb";
 
 @Resolver()
 export class ClientResolver {
@@ -15,7 +14,7 @@ export class ClientResolver {
 	}
 	@Query(() => [Client])
 	ClientsByCompany(
-		@Args("companyId", { type: () => String }, ParseObjectIdPipe)
+		@Args("companyId", { type: () => ObjectId })
 		companyId: ObjectId,
 	): Promise<Client[]> {
 		return this.ClientService.GetByCompanyId(companyId);
@@ -23,7 +22,7 @@ export class ClientResolver {
 
 	@Query(() => Client, { nullable: true })
 	ClientById(
-		@Args("id", { type: () => String }, ParseObjectIdPipe) id: ObjectId,
+		@Args("id", { type: () => ObjectId }) id: ObjectId,
 	): Promise<Client> {
 		return this.ClientService.GetById(id);
 	}
@@ -44,7 +43,7 @@ export class ClientResolver {
 
 	@Mutation(() => Boolean)
 	DeleteClient(
-		@Args("id", { type: () => String }, ParseObjectIdPipe)
+		@Args("id", { type: () => ObjectId })
 		id: ObjectId,
 	): Promise<boolean> {
 		return this.ClientService.Delete(id);

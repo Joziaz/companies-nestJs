@@ -5,7 +5,7 @@ import { ObjectId, SchemaTypes } from "mongoose";
 @ObjectType()
 export class BaseEntity {
 	@Field(() => String)
-	_id: ObjectId | string;
+	_id: ObjectId;
 	@Prop({ type: SchemaTypes.Date, default: Date.now })
 	@Field()
 	CreatedAt: Date;

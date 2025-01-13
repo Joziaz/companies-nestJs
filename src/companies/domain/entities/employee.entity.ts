@@ -21,7 +21,7 @@ export class Employee extends BaseEntity {
 	Position: string;
 	@Prop()
 	@Field()
-	DepartmentId: number;
+	Salary: number;
 	@Prop({ type: [{ type: Types.ObjectId, ref: "Task" }] })
 	@Field(() => [Task], { nullable: true })
 	AssignedTask?: Task[];

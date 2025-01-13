@@ -1,26 +1,25 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsEmail, IsNotEmpty, MaxLength } from "class-validator";
+import { IsNotEmpty, IsNumber, MaxLength } from "class-validator";
 import { ObjectId } from "mongodb";
 
 @InputType()
-export class CreateClientInput {
+export class CreateEmployeeInput {
 	@MaxLength(25)
 	@IsNotEmpty()
 	@Field()
-	Name: string;
-	@MaxLength(200)
+	FirstName: string;
+	@MaxLength(25)
 	@IsNotEmpty()
 	@Field()
-	ContactPerson: string;
-	@MaxLength(15)
+	LastName: string;
+	@MaxLength(20)
 	@IsNotEmpty()
 	@Field()
-	Phone: string;
-	@IsEmail({}, { message: "invalid email" })
+	Position: string;
+	@IsNumber()
 	@IsNotEmpty()
 	@Field()
-	Email: string;
-
+	Salary: number;
 	@Field(() => ObjectId)
 	CompanyId: ObjectId;
 }

@@ -6,6 +6,8 @@ import { join } from "path";
 import { GraphQLFormattedError } from "graphql/error";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { ObjectIdScalar } from "./shared/objectId.scalar";
+import { ObjectId } from "mongodb";
 
 @Module({
 	imports: [
@@ -22,6 +24,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 		}),
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			driver: ApolloDriver,
+			buildSchemaOptions: {
+				scalarsMap: [{ type: ObjectId, scalar: ObjectIdScalar }],
+			},
 			autoSchemaFile: join(process.cwd(), "src/shema.gpl"),
 			sortSchema: true,
 			formatError: (error) => {

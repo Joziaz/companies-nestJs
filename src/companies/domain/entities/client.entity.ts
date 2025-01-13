@@ -14,7 +14,7 @@ export class Client extends BaseEntity {
 		contactPerson: string,
 		phone: string,
 		email: string,
-		company: Company | Types.ObjectId,
+		company: Company,
 	) {
 		super();
 		this.Name = name;
@@ -37,6 +37,6 @@ export class Client extends BaseEntity {
 	Email: string;
 	@Prop({ type: Types.ObjectId, ref: "Company" })
 	@Field(() => Company)
-	Company: Company | Types.ObjectId;
+	Company: Company;
 }
 export const ClientSchema = SchemaFactory.createForClass(Client);
